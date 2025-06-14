@@ -1,0 +1,33 @@
+{
+  "name": "clean-architecture-typescript",
+  "version": "1.0.0",
+  "description": "A  simple clean architecture example made with TypeScript",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "dev": "node --loader ts-node/esm --watch src/main.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npoy/clean-architecture-typescript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/npoy/clean-architecture-typescript/issues"
+  },
+  "homepage": "https://github.com/npoy/clean-architecture-typescript#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.15.30",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
