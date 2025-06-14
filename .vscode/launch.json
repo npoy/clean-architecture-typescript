@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "node",
+          "request": "launch",
+          "name": "Debug Program",
+          "skipFiles": ["<node_internals>/**"],
+          "program": "${workspaceFolder}/src/main.ts",
+          "runtimeArgs": [
+              "--loader", "ts-node/esm"
+          ],
+          "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+          "resolveSourceMapLocations": [
+              "${workspaceFolder}/**",
+              "!**/node_modules/**"
+          ],
+          "sourceMaps": true,
+          "env": {
+              "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json"
+          }
+      },
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Attach to Process",
+        "port": 9229,
+        "restart": true,
+        "sourceMaps": true
+    }
+  ]
+}
