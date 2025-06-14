@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ListBooks } from '../../application/use-cases/ListBooks';
+import { ListBooks } from "../../application/use-cases/ListBooks.js";
 
 export class BookController {
   constructor(private readonly listBooks: ListBooks) {}
