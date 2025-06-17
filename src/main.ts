@@ -1,14 +1,13 @@
+import "reflect-metadata";
+import "./config/dependencies.js";
 import express from "express";
-import { InMemoryBookRepository } from "./infrastructure/repositories/InMemoryBookRepository.js";
-import { ListBooks } from "./application/use-cases/ListBooks.js";
+import { container } from "./config/di-container.js";
 import { BookController } from "./interfaces/controllers/BookController.js";
 
 const app = express();
 app.use(express.json());
 
-const bookRepository = new InMemoryBookRepository();
-const listBooks = new ListBooks(bookRepository);
-const bookController = new BookController(listBooks);
+const bookController = container.resolve<BookController>("BookController");
 
 app.get("/books", bookController.getAll);
 

@@ -1,8 +1,14 @@
 import { Request, Response } from "express";
 import { ListBooks } from "../../application/use-cases/ListBooks.js";
+import { injectable } from "../../config/decorators.js";
 
+@injectable()
 export class BookController {
-  constructor(private readonly listBooks: ListBooks) {}
+  private readonly listBooks: ListBooks;
+  
+  constructor(listBooks: ListBooks) {
+    this.listBooks = listBooks;
+  }
 
   getAll = async(_req: Request, res: Response) => {
     try {
