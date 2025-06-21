@@ -1,3 +1,4 @@
+import { getInjectionTokens } from "./decorators.js";
 type Constructor<T = any> = new (...args: any[]) => T;
 
 export interface IDIContainer {
@@ -30,8 +31,10 @@ class DIContainer implements IDIContainer {
       return instance;
     }
 
-    const paramTypes: Constructor[] = Reflect.getMetadata("design:paramtypes", target) || [];
-    const dependencies = paramTypes.map(dep => this.resolve(dep.name));
+    // Typescript does not support getting interfaces as dependencies so we need to get the tokens from the inject decorator
+    const tokens = getInjectionTokens(target as Constructor);
+    const dependencies = tokens.map(t => this.resolve(t));
+
     const instance = new (target as Constructor)(...dependencies);
     this.singletons.set(token, instance);
     return instance;

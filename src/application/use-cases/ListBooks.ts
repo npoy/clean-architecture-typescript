@@ -1,8 +1,9 @@
 import { Book } from '../../domain/entities/Book.js';
 import { BookRepository } from '../../domain/repositories/BookRepository.js';
-import { injectable } from '../../config/decorators.js';
+import { TOKENS } from "../../config/tokens.js";
+import { inject } from "../../config/decorators.js";
 
-@injectable()
+@inject(TOKENS.BookRepository)
 export class ListBooks {
   private readonly bookRepository: BookRepository;
   

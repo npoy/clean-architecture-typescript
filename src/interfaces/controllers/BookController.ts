@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { ListBooks } from "../../application/use-cases/ListBooks.js";
-import { injectable } from "../../config/decorators.js";
+import { TOKENS } from "../../config/tokens.js";
+import { inject } from "../../config/decorators.js";
 
-@injectable()
+@inject(TOKENS.ListBooks)
 export class BookController {
   private readonly listBooks: ListBooks;
   

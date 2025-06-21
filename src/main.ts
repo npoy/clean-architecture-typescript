@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import "./config/dependencies.js";
 import express from "express";
 import { container } from "./config/di-container.js";

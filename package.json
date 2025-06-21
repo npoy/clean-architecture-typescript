@@ -23,8 +23,7 @@
   },
   "homepage": "https://github.com/npoy/clean-architecture-typescript#readme",
   "dependencies": {
-    "express": "^5.1.0",
-    "reflect-metadata": "^0.2.2"
+    "express": "^5.1.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
