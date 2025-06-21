@@ -5,7 +5,7 @@ export interface IDIContainer {
   resolve<T>(token: string): T;
 }
 
-class DIContainer implements IDIContainer {
+export class DIContainer implements IDIContainer {
   private registry = new Map<string, Constructor | (() => any)>();
   private singletons = new Map<string, any>();
 
