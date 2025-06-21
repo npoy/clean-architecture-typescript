@@ -18,7 +18,8 @@
           "sourceMaps": true,
           "env": {
               "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json"
-          }
+          },
+          "console": "integratedTerminal"
       },
       {
         "type": "node",
