@@ -5,7 +5,7 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "test": "node --test --loader ts-node/esm src/application/use-cases/ListBooks.test.ts src/config/di-container.test.ts",
+    "test": "node --test --loader ts-node/esm src/**/*.test.ts",
     "test:watch": "node --test --watch --loader ts-node/esm src/**/*.test.ts",
     "build": "tsc",
     "start": "node dist/main.js",
