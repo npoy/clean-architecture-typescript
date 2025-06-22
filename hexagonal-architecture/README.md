@@ -1,2 +1,2 @@
-# clean-architecture-typescript
-A  simple clean architecture example made with TypeScript
+# hexagonal-architecture
+A simple hexagonal architecture example made with TypeScript
