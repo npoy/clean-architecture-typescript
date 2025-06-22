@@ -6,20 +6,21 @@
           "request": "launch",
           "name": "Debug Program",
           "skipFiles": ["<node_internals>/**"],
-          "program": "${workspaceFolder}/src/main.ts",
+          "program": "${workspaceFolder}/clean-architecture/src/main.ts",
           "runtimeArgs": [
               "--loader", "ts-node/esm"
           ],
-          "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+          "outFiles": ["${workspaceFolder}/clean-architecture/dist/**/*.js"],
           "resolveSourceMapLocations": [
-              "${workspaceFolder}/**",
-              "!**/node_modules/**"
+              "${workspaceFolder}/clean-architecture/**",
+              "!**/clean-architecture/node_modules/**"
           ],
           "sourceMaps": true,
           "env": {
-              "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json"
+              "TS_NODE_PROJECT": "${workspaceFolder}/clean-architecture/tsconfig.json"
           },
-          "console": "integratedTerminal"
+          "console": "integratedTerminal",
+          "cwd": "${workspaceFolder}/clean-architecture"
       },
       {
         "type": "node",
