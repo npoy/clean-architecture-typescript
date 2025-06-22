@@ -1,7 +1,7 @@
 {
-  "name": "clean-architecture",
+  "name": "hexagonal-architecture",
   "version": "1.0.0",
-  "description": "A  simple clean architecture example made with TypeScript",
+  "description": "A simple hexagonal architecture example made with TypeScript",
   "main": "main.js",
   "type": "module",
   "scripts": {
