@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { ListBooks } from './ListBooks.js';
-import { Book } from '../../domain/entities/Book.js';
-import { BookRepository } from '../../domain/repositories/BookRepository.js';
+import { ListBooks } from '../../../src/application/use-cases/ListBooks.js';
+import { Book } from '../../../src/domain/entities/Book.js';
+import { BookRepository } from '../../../src/domain/repositories/BookRepository.js';
 
 // Mock implementation of BookRepository for testing
 class MockBookRepository implements BookRepository {
@@ -24,29 +24,56 @@ class MockBookRepository implements BookRepository {
     this.books.push(book);
     return book;
   }
+
+  async update(id: string, book: Partial<Book>): Promise<Book | null> {
+    const index = this.books.findIndex(b => b.id === id);
+    if (index === -1) return null;
+    this.books[index] = { ...this.books[index], ...book };
+    return this.books[index];
+  }
+
+  async delete(id: string): Promise<boolean> {
+    const index = this.books.findIndex(b => b.id === id);
+    if (index === -1) return false;
+    this.books.splice(index, 1);
+    return true;
+  }
+
+  async findBy(filter: Partial<Book>): Promise<Book[]> {
+    return this.books.filter(book => {
+      return Object.entries(filter).every(([key, value]) => {
+        if (value === undefined || value === null) return true;
+        const bookValue = book[key as keyof Book];
+        if (typeof value === 'string' && typeof bookValue === 'string') {
+          return bookValue.toLowerCase().includes(value.toLowerCase());
+        }
+        return bookValue === value;
+      });
+    });
+  }
 }
 
 describe('ListBooks Use Case', () => {
   it('should return all books from repository', async () => {
-    // Arrange - Create test data and mock repository
+    // Arrange
     const testBooks: Book[] = [
-      { id: '1', title: 'Test Book 1', author: 'Author 1', price: 25 },
-      { id: '2', title: 'Test Book 2', author: 'Author 2', price: 30 }
+      { id: '550e8400-e29b-41d4-a716-446655440012', title: 'Test Book 1', author: 'Author 1', price: 25 },
+      { id: '550e8400-e29b-41d4-a716-446655440013', title: 'Test Book 2', author: 'Author 2', price: 30 }
     ];
     const mockRepository = new MockBookRepository(testBooks);
     const listBooks = new ListBooks(mockRepository);
 
-    // Act - Execute the use case
+    // Act
     const result = await listBooks.execute();
 
-    // Assert - Verify the result
+    // Assert
     assert.strictEqual(result.length, 2);
     assert.strictEqual(result[0].title, 'Test Book 1');
     assert.strictEqual(result[1].title, 'Test Book 2');
   });
 
   it('should return empty array when repository has no books', async () => {
-    // Arrange - Create empty mock repository
+    // Arrange
     const mockRepository = new MockBookRepository([]);
     const listBooks = new ListBooks(mockRepository);
 
@@ -58,7 +85,7 @@ describe('ListBooks Use Case', () => {
   });
 
   it('should handle repository errors gracefully', async () => {
-    // Arrange - Create a repository that throws an error
+    // Arrange
     const errorRepository: BookRepository = {
       async findAll(): Promise<Book[]> {
         throw new Error('Database connection failed');
@@ -68,11 +95,20 @@ describe('ListBooks Use Case', () => {
       },
       async save(): Promise<Book> {
         throw new Error('Database connection failed');
+      },
+      async update(): Promise<Book | null> {
+        throw new Error('Database connection failed');
+      },
+      async delete(): Promise<boolean> {
+        throw new Error('Database connection failed');
+      },
+      async findBy(): Promise<Book[]> {
+        throw new Error('Database connection failed');
       }
     };
     const listBooks = new ListBooks(errorRepository);
 
-    // Act & Assert - Verify error is propagated
+    // Act & Assert
     await assert.rejects(
       async () => await listBooks.execute(),
       /Database connection failed/

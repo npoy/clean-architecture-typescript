@@ -5,8 +5,8 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "test": "node --test --loader ts-node/esm src/**/*.test.ts",
-    "test:watch": "node --test --watch --loader ts-node/esm src/**/*.test.ts",
+    "test": "node --test --loader ts-node/esm tests/**/*.test.ts",
+    "test:watch": "node --test --watch --loader ts-node/esm tests/**/*.test.ts",
     "build": "tsc",
     "start": "node dist/main.js",
     "start:prod": "cross-env NODE_ENV=production node dist/main.js",
@@ -26,8 +26,10 @@
   "homepage": "https://github.com/npoy/clean-architecture-typescript#readme",
   "dependencies": {
     "@types/better-sqlite3": "^7.6.13",
+    "@types/uuid": "^10.0.0",
     "better-sqlite3": "^11.10.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
