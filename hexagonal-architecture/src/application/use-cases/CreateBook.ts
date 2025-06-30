@@ -1,5 +1,5 @@
-import { Book } from '../../domain/entities/Book.js';
-import { BookRepository } from '../../domain/repositories/BookRepository.js';
+import { Book } from '../../domain/models/Book.js';
+import { BookRepository } from '../../domain/ports/BookRepository.js';
 import { TOKENS } from "../../config/tokens.js";
 import { inject } from "../../config/decorators.js";
 import { v4 as uuidv4 } from 'uuid';

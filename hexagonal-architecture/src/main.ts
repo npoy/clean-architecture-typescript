@@ -1,7 +1,7 @@
 import "./config/dependencies.js";
 import express from "express";
 import { container } from "./config/di-container.js";
-import { BookController } from "./interfaces/controllers/BookController.js";
+import { BookController } from "./adapters/in/http/BookController.js";
 
 const app = express();
 app.use(express.json());

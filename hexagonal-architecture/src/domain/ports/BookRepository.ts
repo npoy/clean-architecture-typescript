@@ -1,4 +1,4 @@
-import { Book } from "../entities/Book.js";
+import { Book } from "../models/Book.js";
 
 export interface BookRepository {
   findAll(): Promise<Book[]>;

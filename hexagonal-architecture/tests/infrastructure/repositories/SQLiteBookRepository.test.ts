@@ -1,7 +1,7 @@
 import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert';
 import { SQLiteBookRepository } from '../../../src/infrastructure/repositories/SQLiteBookRepository.js';
-import { Book } from '../../../src/domain/entities/Book.js';
+import { Book } from '../../../src/domain/models/Book.js';
 
 describe('SQLiteBookRepository', () => {
   let repo: SQLiteBookRepository;
