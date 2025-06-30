@@ -1,18 +1,18 @@
-# Clean Architecture Implementation
+# Hexagonal Architecture Implementation
 
 ## Architecture Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        CLEAN ARCHITECTURE                       │
+│                    HEXAGONAL ARCHITECTURE                       │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                    INTERFACES LAYER                        │ │
-│  │  (Controllers, Presenters, Gateways)                       │ │
+│  │                    INBOUND ADAPTERS                        │ │
+│  │  (Primary/Driving Adapters)                                │ │
 │  │                                                             │ │
 │  │  ┌─────────────────────────────────────────────────────────┐ │ │
-│  │  │              BookController                             │ │ │
+│  │  │              HTTP Controller                            │ │ │
 │  │  │  - Handles HTTP requests                                │ │ │
 │  │  │  - Delegates to use cases                               │ │ │
 │  │  │  - Returns HTTP responses                               │ │ │
@@ -20,30 +20,30 @@
 │  └─────────────────────────────────────────────────────────────┘ │
 │                                                                 │
 │  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                  APPLICATION LAYER                         │ │
-│  │  (Use Cases, Application Services)                         │ │
+│  │                  APPLICATION CORE                          │ │
+│  │  (Use Cases, Business Logic)                               │ │
 │  │                                                             │ │
 │  │  ┌─────────────────────────────────────────────────────────┐ │ │
 │  │  │              ListBooks                                  │ │ │
 │  │  │  - Business logic                                       │ │ │
 │  │  │  - Orchestrates domain objects                          │ │ │
-│  │  │  - Uses repository interfaces                           │ │ │
+│  │  │  - Uses repository ports                                │ │ │
 │  │  └─────────────────────────────────────────────────────────┘ │ │
 │  └─────────────────────────────────────────────────────────────┘ │
 │                                                                 │
 │  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                    DOMAIN LAYER                            │ │
-│  │  (Entities, Value Objects, Domain Services)                │ │
+│  │                    DOMAIN CORE                             │ │
+│  │  (Entities, Ports)                                         │ │
 │  │                                                             │ │
 │  │  ┌─────────────────────────────────────────────────────────┐ │ │
-│  │  │              Book Entity                                │ │ │
+│  │  │              Book Model                                 │ │ │
 │  │  │  - Core business entity                                 │ │ │
 │  │  │  - Contains business rules                              │ │ │
 │  │  │  - Independent of frameworks                            │ │ │
 │  │  └─────────────────────────────────────────────────────────┘ │ │
 │  │                                                             │ │
 │  │  ┌─────────────────────────────────────────────────────────┐ │ │
-│  │  │           BookRepository Interface                      │ │ │
+│  │  │           BookRepository Port                           │ │ │
 │  │  │  - Defines contract for data access                     │ │ │
 │  │  │  - Domain-driven design                                 │ │ │
 │  │  │  - Framework independent                                │ │ │
@@ -51,19 +51,19 @@
 │  └─────────────────────────────────────────────────────────────┘ │
 │                                                                 │
 │  ┌─────────────────────────────────────────────────────────────┐ │
-│  │                 INFRASTRUCTURE LAYER                       │ │
-│  │  (Frameworks, Drivers, External Interfaces)                │ │
+│  │                   OUTBOUND ADAPTERS                        │ │
+│  │  (Secondary/Driven Adapters)                               │ │
 │  │                                                             │ │
 │  │  ┌─────────────────────────────────────────────────────────┐ │ │
 │  │  │         InMemoryBookRepository                          │ │ │
-│  │  │  - Implements BookRepository interface                  │ │ │
+│  │  │  - Implements BookRepository port                       │ │ │
 │  │  │  - In-memory data storage                               │ │ │
 │  │  │  - Used for development/testing                         │ │ │
 │  │  └─────────────────────────────────────────────────────────┘ │ │
 │  │                                                             │ │
 │  │  ┌─────────────────────────────────────────────────────────┐ │ │
 │  │  │         SQLiteBookRepository                            │ │ │
-│  │  │  - Implements BookRepository interface                  │ │ │
+│  │  │  - Implements BookRepository port                       │ │ │
 │  │  │  - SQLite database storage                              │ │ │
 │  │  │  - Used for production                                  │ │ │
 │  │  └─────────────────────────────────────────────────────────┘ │ │
@@ -72,143 +72,183 @@
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+## Hexagonal Architecture Principles
+
+### 1. **Ports and Adapters Pattern**
+- **Ports**: Define contracts/interfaces for communication
+- **Inbound Adapters**: Handle incoming requests (HTTP controllers)
+- **Outbound Adapters**: Handle outgoing requests (database repositories)
+
+### 2. **Dependency Inversion**
+- Domain core defines ports (interfaces)
+- Adapters implement ports
+- Application core depends on ports, not adapters
+
+### 3. **Hexagonal Structure**
+```
+                    ┌─────────────────┐
+                    │   Inbound       │
+                    │   Adapters      │
+                    │  (HTTP, CLI)    │
+                    └─────────┬───────┘
+                              │
+                    ┌─────────▼───────┐
+                    │   Application   │
+                    │     Core        │
+                    │  (Use Cases)    │
+                    └─────────┬───────┘
+                              │
+                    ┌─────────▼───────┐
+                    │   Domain Core   │
+                    │ (Entities,      │
+                    │  Ports)         │
+                    └─────────┬───────┘
+                              │
+                    ┌─────────▼───────┐
+                    │   Outbound      │
+                    │   Adapters      │
+                    │ (Database, API) │
+                    └─────────────────┘
+```
+
 ## Dependency Flow
 
 ```
 ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│   Express   │───▶│ Controller  │───▶│  Use Case   │
-│   (HTTP)    │    │             │    │             │
+│   Express   │───▶│   HTTP      │───▶│  Use Case   │
+│   (HTTP)    │    │  Adapter    │    │             │
 └─────────────┘    └─────────────┘    └─────────────┘
                                               │
                                               ▼
                                        ┌─────────────┐
                                        │ Repository  │
-                                       │ Interface   │
+                                       │    Port     │
                                        └─────────────┘
                                               │
                                               ▼
                                        ┌─────────────┐
                                        │Repository   │
-                                       │Implementation│
+                                       │  Adapter    │
                                        └─────────────┘
                                               │
                                               ▼
                                        ┌─────────────┐
                                        │   Domain    │
-                                       │   Entity    │
+                                       │   Model     │
                                        └─────────────┘
 ```
-
-## Correct Dependency Flow
-
-```
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│   Express   │───▶│ Controller  │───▶│  Use Case   │
-│   (HTTP)    │    │             │    │             │
-└─────────────┘    └─────────────┘    └─────────────┘
-                                              │
-                                              ▼
-                                       ┌─────────────┐
-                                       │ Repository  │
-                                       │ Interface   │
-                                       └─────────────┘
-                                              │
-                                              ▼
-                                       ┌─────────────┐
-                                       │Repository   │
-                                       │Implementation│
-                                       └─────────────┘
-                                              │
-                                              ▼
-                                       ┌─────────────┐
-                                       │   Domain    │
-                                       │   Entity    │
-                                       └─────────────┘
-```
-
-**Actual Code Dependencies on Domain:**
-1. **Application Layer** (Use Cases) → **Domain Entities** + **Domain Interfaces**
-   - `ListBooks` imports `Book` entity and `BookRepository` interface
-2. **Infrastructure Layer** (Repository Implementations) → **Domain Entities** + **Domain Interfaces**
-   - `InMemoryBookRepository` imports `Book` entity and `BookRepository` interface
-   - `SQLiteBookRepository` imports `Book` entity and `BookRepository` interface
-
-**Key Point:** Both Application and Infrastructure layers depend on Domain, but Domain depends on nothing outside itself.
 
 ## Key Principles Implemented
 
-### 1. **Dependency Rule**
-- Dependencies point inward
-- Domain layer has no dependencies on outer layers
-- Infrastructure depends on domain, not vice versa
+### 1. **Ports and Adapters**
+```typescript
+// Domain defines the port (interface)
+export interface BookRepository {
+  findAll(): Promise<Book[]>;
+  findById(id: string): Promise<Book | null>;
+  save(book: Book): Promise<Book>;
+}
+
+// Outbound adapter implements the port
+export class InMemoryBookRepository implements BookRepository {
+  // Implementation details
+}
+```
 
 ### 2. **Dependency Injection**
 ```typescript
-// Use case depends on interface, not implementation
+// Use case depends on port, not adapter
 @inject("BookRepository")
 export class ListBooks {
   constructor(private bookRepository: BookRepository) {}
 }
 ```
 
-### 3. **Interface Segregation**
-```typescript
-// Domain defines the contract
-export interface BookRepository {
-  findAll(): Promise<Book[]>;
-  findById(id: string): Promise<Book | null>;
-  save(book: Book): Promise<Book>;
-}
-```
+### 3. **Hexagonal Boundaries**
+- **Inbound**: HTTP controllers adapt external requests to application core
+- **Outbound**: Database repositories adapt application core to external systems
+- **Core**: Business logic independent of external concerns
 
 ### 4. **Single Responsibility**
-- Each layer has a specific responsibility
-- Controllers handle HTTP concerns
-- Use cases handle business logic
-- Entities represent business concepts
+- **Inbound Adapters**: Handle external input (HTTP, CLI, etc.)
+- **Application Core**: Business logic and use cases
+- **Domain Core**: Business entities and port definitions
+- **Outbound Adapters**: Handle external output (databases, APIs, etc.)
 
 ## File Structure
 
 ```
 src/
 ├── domain/                    # Core business logic
-│   ├── entities/
+│   ├── models/
 │   │   └── Book.ts           # Business entity
-│   └── repositories/
-│       └── BookRepository.ts # Repository interface
+│   └── ports/
+│       └── BookRepository.ts # Repository port (interface)
 │
 ├── application/               # Application business rules
 │   └── use-cases/
-│       └── ListBooks.ts      # Use case implementation
+│       ├── ListBooks.ts      # Use case implementation
+│       ├── CreateBook.ts     # Use case implementation
+│       ├── GetBookById.ts    # Use case implementation
+│       ├── UpdateBook.ts     # Use case implementation
+│       ├── DeleteBook.ts     # Use case implementation
+│       └── SearchBooks.ts    # Use case implementation
 │
-├── interfaces/                # Interface adapters
-│   └── controllers/
-│       └── BookController.ts # HTTP controller
-│
-├── infrastructure/            # External concerns
-│   └── repositories/
-│       ├── InMemoryBookRepository.ts
-│       └── SQLiteBookRepository.ts
+├── adapters/                  # Interface adapters
+│   ├── in/                   # Inbound adapters
+│   │   └── http/
+│   │       └── BookController.ts # HTTP controller
+│   └── out/                  # Outbound adapters
+│       └── db/
+│           ├── InMemoryBookRepository.ts
+│           └── SQLiteBookRepository.ts
 │
 ├── config/                    # Configuration
 │   ├── di-container.ts       # Dependency injection
 │   ├── decorators.ts         # DI decorators
-│   └── dependencies.ts       # Service registration
+│   ├── dependencies.ts       # Service registration
+│   └── tokens.ts             # DI tokens
 │
 └── main.ts                   # Application entry point
 ```
 
-## Benefits
+## Benefits of Hexagonal Architecture
 
-1. **Testability**: Easy to mock dependencies
-2. **Maintainability**: Clear separation of concerns
-3. **Flexibility**: Easy to swap implementations
-4. **Independence**: Domain logic independent of frameworks
-5. **Scalability**: Easy to add new features
+1. **Testability**: Easy to mock ports and test adapters in isolation
+2. **Maintainability**: Clear separation between core and external concerns
+3. **Flexibility**: Easy to swap adapters without changing core logic
+4. **Independence**: Core business logic independent of external frameworks
+5. **Scalability**: Easy to add new adapters for different interfaces
+6. **Technology Agnostic**: Core logic can work with any technology stack
 
 ## Testing Strategy
 
-- **Unit Tests**: Test each layer in isolation
-- **Integration Tests**: Test layer interactions
-- **Mock Dependencies**: Use mock repositories for testing
-- **Dependency Injection**: Enables easy testing setup 
+### **Unit Tests**
+- **Domain Models**: Test business entities and rules
+- **Use Cases**: Test business logic with mocked ports
+- **Adapters**: Test adapter implementations with mocked dependencies
+
+### **Integration Tests**
+- **Port-Adapter Integration**: Test port implementations
+- **End-to-End**: Test complete request flows
+
+### **Test Structure**
+```
+tests/
+├── application/use-cases/     # Use case tests
+├── infrastructure/repositories/ # Repository adapter tests
+├── interfaces/controllers/    # Controller adapter tests
+└── config/                   # Configuration tests
+```
+
+## Comparison with Clean Architecture
+
+| Aspect | Clean Architecture | Hexagonal Architecture |
+|--------|-------------------|----------------------|
+| **Focus** | Dependency direction | Ports and adapters |
+| **Terminology** | Layers | Adapters |
+| **Structure** | Vertical layers | Hexagonal shape |
+| **Dependencies** | Inward pointing | Through ports |
+| **Flexibility** | Framework independence | Technology agnostic |
+
+Both architectures achieve similar goals but use different metaphors and terminology to describe the same principles of separation of concerns and dependency inversion. 
