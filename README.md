@@ -14,7 +14,7 @@ A complete implementation of Clean Architecture with dependency injection, custo
 
 An implementation of Hexagonal Architecture (Ports and Adapters) with dependency injection and repository pattern.
 
-**[📖 Read More](./hexagonal-architecture/README.md)**
+**[📖 Read More](./hexagonal-architecture/README.md)** | **[🏗️ Architecture Details](./hexagonal-architecture/ARCHITECTURE.md)**
 
 ## 🚀 Quick Start
 
