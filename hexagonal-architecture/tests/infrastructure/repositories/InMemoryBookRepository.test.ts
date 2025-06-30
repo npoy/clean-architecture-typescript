@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { InMemoryBookRepository } from '../../../src/infrastructure/repositories/InMemoryBookRepository.js';
-import { Book } from '../../../src/domain/entities/Book.js';
+import { InMemoryBookRepository } from '../../../src/adapters/out/db/InMemoryBookRepository.js';
+import { Book } from '../../../src/domain/models/Book.js';
 
 describe('InMemoryBookRepository', () => {
   it('should save and retrieve a book', async () => {

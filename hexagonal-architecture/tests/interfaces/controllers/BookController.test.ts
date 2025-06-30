@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { BookController } from '../../../src/interfaces/controllers/BookController.js';
-import { Book } from '../../../src/domain/entities/Book.js';
-import { BookRepository } from '../../../src/domain/repositories/BookRepository.js';
+import { BookController } from '../../../src/adapters/in/http/BookController.js';
+import { Book } from '../../../src/domain/models/Book.js';
+import { BookRepository } from '../../../src/domain/ports/BookRepository.js';
 import { ListBooks } from '../../../src/application/use-cases/ListBooks.js';
 import { GetBookById } from '../../../src/application/use-cases/GetBookById.js';
 import { CreateBook } from '../../../src/application/use-cases/CreateBook.js';

@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import { DIContainer } from '../../src/config/di-container.js';
-import { BookRepository } from '../../src/domain/repositories/BookRepository.js';
-import { InMemoryBookRepository } from '../../src/infrastructure/repositories/InMemoryBookRepository.js';
+import { BookRepository } from '../../src/domain/ports/BookRepository.js';
+import { InMemoryBookRepository } from '../../src/adapters/out/db/InMemoryBookRepository.js';
 
 describe('DIContainer', () => {
   it('should register and resolve a service', () => {

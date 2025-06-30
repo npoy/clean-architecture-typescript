@@ -1,6 +1,6 @@
 import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert';
-import { SQLiteBookRepository } from '../../../src/infrastructure/repositories/SQLiteBookRepository.js';
+import { SQLiteBookRepository } from '../../../src/adapters/out/db/SQLiteBookRepository.js';
 import { Book } from '../../../src/domain/models/Book.js';
 
 describe('SQLiteBookRepository', () => {

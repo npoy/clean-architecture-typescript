@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import { DeleteBook } from '../../../src/application/use-cases/DeleteBook.js';
-import { Book } from '../../../src/domain/entities/Book.js';
-import { BookRepository } from '../../../src/domain/repositories/BookRepository.js';
+import { Book } from '../../../src/domain/models/Book.js';
+import { BookRepository } from '../../../src/domain/ports/BookRepository.js';
 
 // Mock implementation of BookRepository for testing
 class MockBookRepository implements BookRepository {
