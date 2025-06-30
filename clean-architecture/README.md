@@ -110,6 +110,16 @@ Set `NODE_ENV` environment variable to control the behavior.
 
 - `GET /books` - Retrieve all books
 
+## 🧪 Postman Collection
+
+You can test the API using the provided Postman collection:
+
+- Path: `postman/bookstore-api.postman_collection.json`
+- To use:
+  1. Open Postman.
+  2. Click "Import" → Choose the file.
+  3. Run the requests against your local or deployed environment.
+
 ## 📖 Documentation
 
 - [Architecture Overview](./ARCHITECTURE.md) - Detailed architecture documentation
