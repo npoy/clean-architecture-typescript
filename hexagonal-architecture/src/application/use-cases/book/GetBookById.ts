@@ -1,7 +1,7 @@
-import { Book } from '../../domain/models/Book.js';
-import { BookRepository } from '../../domain/ports/BookRepository.js';
-import { TOKENS } from "../../config/tokens.js";
-import { inject } from "../../config/decorators.js";
+import { Book } from "../../../domain/models/Book.js";
+import { BookRepository } from "../../../domain/ports/BookRepository.js";
+import { TOKENS } from "../../../config/tokens.js";
+import { inject } from "../../../config/decorators.js";
 
 @inject(TOKENS.BookRepository)
 export class GetBookById {
