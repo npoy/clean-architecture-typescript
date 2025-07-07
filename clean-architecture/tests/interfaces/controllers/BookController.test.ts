@@ -3,12 +3,12 @@ import assert from 'node:assert';
 import { BookController } from '../../../src/interfaces/controllers/BookController.js';
 import { Book } from '../../../src/domain/entities/Book.js';
 import { BookRepository } from '../../../src/domain/repositories/BookRepository.js';
-import { ListBooks } from '../../../src/application/use-cases/ListBooks.js';
-import { GetBookById } from '../../../src/application/use-cases/GetBookById.js';
-import { CreateBook } from '../../../src/application/use-cases/CreateBook.js';
-import { UpdateBook } from '../../../src/application/use-cases/UpdateBook.js';
-import { DeleteBook } from '../../../src/application/use-cases/DeleteBook.js';
-import { SearchBooks } from '../../../src/application/use-cases/SearchBooks.js';
+import { ListBooks } from '../../../src/application/use-cases/book/ListBooks.js';
+import { GetBookById } from '../../../src/application/use-cases/book/GetBookById.js';
+import { CreateBook } from '../../../src/application/use-cases/book/CreateBook.js';
+import { UpdateBook } from '../../../src/application/use-cases/book/UpdateBook.js';
+import { DeleteBook } from '../../../src/application/use-cases/book/DeleteBook.js';
+import { SearchBooks } from '../../../src/application/use-cases/book/SearchBooks.js';
 
 // Mock implementation of BookRepository for testing
 class MockBookRepository implements BookRepository {

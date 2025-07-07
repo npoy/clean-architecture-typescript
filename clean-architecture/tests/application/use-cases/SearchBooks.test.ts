@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { SearchBooks } from '../../../src/application/use-cases/SearchBooks.js';
+import { SearchBooks } from '../../../src/application/use-cases/book/SearchBooks.js';
 import { Book } from '../../../src/domain/entities/Book.js';
 import { BookRepository } from '../../../src/domain/repositories/BookRepository.js';
 
