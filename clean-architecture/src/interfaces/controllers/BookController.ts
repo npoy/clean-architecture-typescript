@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { ListBooks } from "../../application/use-cases/ListBooks.js";
-import { GetBookById } from "../../application/use-cases/GetBookById.js";
-import { CreateBook } from "../../application/use-cases/CreateBook.js";
-import { UpdateBook } from "../../application/use-cases/UpdateBook.js";
-import { DeleteBook } from "../../application/use-cases/DeleteBook.js";
-import { SearchBooks } from "../../application/use-cases/SearchBooks.js";
+import { ListBooks } from "../../application/use-cases/book/ListBooks.js";
+import { GetBookById } from "../../application/use-cases/book/GetBookById.js";
+import { CreateBook } from "../../application/use-cases/book/CreateBook.js";
+import { UpdateBook } from "../../application/use-cases/book/UpdateBook.js";
+import { DeleteBook } from "../../application/use-cases/book/DeleteBook.js";
+import { SearchBooks } from "../../application/use-cases/book/SearchBooks.js";
 import { TOKENS } from "../../config/tokens.js";
 import { inject } from "../../config/decorators.js";
 
